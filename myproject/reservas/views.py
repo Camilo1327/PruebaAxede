@@ -31,6 +31,14 @@ def CarritoReserva(request):
             fechafin = form.cleaned_data['FechaFin']
             numpersonas = form.cleaned_data['NumPersonas']
 
+            HabitacionesDisponibles = Habitacion.objects.filter(
+                Sede=sede,
+                TipoHabitacion=tipohabitacion,
+                Ocupado='no'
+            )
+
+
+            return render(request, 'reservas/CarritoReserva.html')
     else:
         form = ReservaForm()
 
