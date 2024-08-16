@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Hoteles</span>
+    </div>
+  </nav>
+  <h1>Simulacion de Reserva</h1>
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Verificar Disponibilidad</button>
+  </form>
+
+  {% if habitaciones_disponibles %}
+      <h2>Habitaciones Disponibles</h2>
+      <ul>
+          {% for habitacion in habitaciones_disponibles %}
+              <li>Tipo: {{ habitacion.TipoHabitacion }}, Tarifa Alta: {{ habitacion.TarifaTAlta }}, Tarifa Baja: {{ habitacion.TarifaTBaja }}</li>
+          {% endfor %}
+      </ul>
+      <h3>Costo Estimado: {{ costo_estimado }}</h3>
+  {% endif %}
+</body>
+</html>
