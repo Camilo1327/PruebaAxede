@@ -5,7 +5,7 @@ Paso a paso prueba AXEDE
 3. Importar  la base de datos MySQL (Tener MySQL 8.0 o superior)
 4. Abrir el proyecto en la terminal
 5. Iniciar el entorno virtual con el siguiente comando “Source ven/bin/Activate”
-6. Instalar los requerimientos con el comando “pip install -r requirements.txt”
+6. Instalar los requerimientos con el comando “pip install -r requirements.txt” o “pip3 install -r requirements.txt”
 7. Entrar al directorio myproject con el comando “cd myproject”
-8. Correr el servidor con el comando “python3 manage.py runserver”
+8. Correr el servidor con el comando “python manage.py runserver” o “python3 manage.py runserver”
 9. Abrir el enlace que se genere en la consola, generalmente es “http://127.0.0.1:8000/“ 
