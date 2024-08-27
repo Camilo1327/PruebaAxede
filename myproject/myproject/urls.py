@@ -20,7 +20,8 @@ from reservas.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('AgregarTemporadas/', AgregarTemporada, name='AgregarTemporada'),
-    path('', CarritoReserva, name='Seleccion'),
+    path('', CarritoReserva, name='reserva'),
+    path('TiposHabitaciones', TiposHabitaciones, name='TiposHabitaciones'),
+
 
 ]

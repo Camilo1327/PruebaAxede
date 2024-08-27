@@ -19,6 +19,7 @@ class Sede(models.Model):
 
 class Habitacion(models.Model):
     IdHabitacion = models.AutoField(primary_key=True)
+    Num_Habitacion = models.IntegerField()
     TIPO_HABITACION = [
         ('estandar','Estandar'),
         ('premium','Premium'),
@@ -32,8 +33,8 @@ class Habitacion(models.Model):
         ('no','NO'),
     ]
     Ocupado = models.CharField(max_length=3, choices=OCUPADO_CHOICES)
-    TarifaTAlta = models.CharField(max_length=10)
-    TarifaTBaja = models.CharField(max_length=10)
+    TarifaTAlta = models.IntegerField(max_length=10)
+    TarifaTBaja = models.IntegerField(max_length=10)
 
 class Reserva(models.Model):
     Sede = models.ForeignKey(Sede, on_delete=models.CASCADE)

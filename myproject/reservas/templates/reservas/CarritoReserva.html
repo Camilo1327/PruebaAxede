@@ -2,31 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reservar Habitación</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">   
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <span class="navbar-brand mb-0 h1">Hoteles</span>
-    </div>
-  </nav>
-  <h1>Simulacion de Reserva</h1>
-  <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Verificar Disponibilidad</button>
-  </form>
 
-  {% if habitaciones_disponibles %}
-      <h2>Habitaciones Disponibles</h2>
-      <ul>
-          {% for habitacion in habitaciones_disponibles %}
-              <li>Tipo: {{ habitacion.TipoHabitacion }}, Tarifa Alta: {{ habitacion.TarifaTAlta }}, Tarifa Baja: {{ habitacion.TarifaTBaja }}</li>
-          {% endfor %}
-      </ul>
-      <h3>Costo Estimado: {{ costo_estimado }}</h3>
-  {% endif %}
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0 h1">Axede Hotels</span>
+        </div>
+      </nav>
+    <h1>Reservar Habitación</h1>
+<div class="container">
+    <form method="post" id="reserva-form">
+        {% csrf_token %}
+        <div class="Seleccionsedeyhabi">
+        <label for="id_Sede">Selecciona la Sede:</label>
+        <select id="id_Sede" name="Sede">
+            <option value="">Selecciona la Sede</option>
+            {% for sede in form.fields.Sede.queryset %}
+                <option value="{{ sede.IdSede }}">{{ sede.NomSede }}</option>
+            {% endfor %}
+        </select>
+
+        <div id="tipo-habitacion-container" >
+            <label for="id_TipoHabitacion">Tipo de Habitación:</label>
+            <select id="id_TipoHabitacion" name="TipoHabitacion">
+                <option value="">Selecciona el tipo</option>
+            </select>
+        </div>
+     </div>
+    <div class="fechas">
+     <label for="id_FechaInicio">Fecha de Inicio:</label>
+        <input type="date" id="id_FechaInicio" name="FechaInicio">
+
+        <label for="id_FechaFin">Fecha de Fin:</label>
+        <input type="date" id="id_FechaFin" name="FechaFin">
+    </div>
+        <label for="id_NumPersonas">Número de Personas:</label>
+        <input type="number" id="id_NumPersonas" name="NumPersonas" min="1">
+
+        <button type="submit">Buscar Habitaciones</button>
+    </form>
+
+    {% if habitaciones_necesarias is not None %}
+        <h2>Resumen de Reserva</h2>
+        <p>Habitaciones necesarias: {{ habitaciones_necesarias }}</p>
+        <p>Tarifa por habitación: $ {{ tarifa_por_noche }} Pesos</p>
+        <p>Valor total: $ {{ tarifa_total }} Pesos</p>
+    {% endif %}
+</div>
+    <script>
+        $(document).ready(function(){
+            $('#id_Sede').change(function(){
+                var sedeId = $(this).val();
+                
+                if(sedeId) {
+                    $.ajax({
+                        url: "{% url 'TiposHabitaciones' %}",
+                        data: {'sede_id': sedeId},
+                        success: function(data) {
+                            var tipoHabitacionSelect = $('#id_TipoHabitacion');
+                            tipoHabitacionSelect.empty();
+                            tipoHabitacionSelect.append('<option value="">Selecciona el tipo</option>');
+                                $.each(data, function(index, tipo) {
+                                    tipoHabitacionSelect.append('<option value="'+ tipo.TipoHabitacion +'">' + tipo.TipoHabitacion + '</option>');
+                                });
+                            
+                        }
+                    });
+                } else {
+                    $('#habitaciones-lista').empty();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

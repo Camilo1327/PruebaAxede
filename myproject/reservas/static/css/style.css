@@ -1,0 +1,26 @@
+* {
+    font-family: 'Josefin-Sans';
+}
+.container {
+    background-color: #102b30;
+    color: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+
+
+}
+h1 {
+    text-align: center;
+}
+.Seleccionsedeyhabi {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+}
+.fechas {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+}
